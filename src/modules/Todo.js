@@ -1,7 +1,7 @@
 import { Storage } from './Storage';
 
 export class Todo {
-  static idCounter = Storage.lastIdCount() || 0;
+  static idCounter = Storage.getHighestTodoId();
 
   constructor(title, todoItems, dateCreated) {
     this.id = ++Todo.idCounter;

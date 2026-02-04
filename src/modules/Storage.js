@@ -11,7 +11,7 @@ export class Storage {
 
   // Retrieve all todos from localStorage
   static retrieveAllTodos() {
-    if (localStorage.length < 0) return;
+    if (localStorage.length === 0) return;
 
     const items = {};
     for (let i = 0; i < localStorage.length; i++) {
@@ -42,9 +42,17 @@ export class Storage {
     }
   }
 
-  // Get the count of stored todos
-  static lastIdCount() {
-    return localStorage.length;
+  // Get the highest ID from all stored todos
+  static getHighestTodoId() {
+    let highestId = 0;
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      const id = parseInt(key, 10);
+      if (!isNaN(id) && id > highestId) {
+        highestId = id;
+      }
+    }
+    return highestId;
   }
 
   // Remove a todo from localStorage by its ID

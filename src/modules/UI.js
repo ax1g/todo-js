@@ -3,6 +3,8 @@ import { Storage } from './Storage';
 import { format } from 'date-fns';
 
 export class UI {
+  static saveTodoHandler = () => this.addTodo();
+
   static init() {
     this.displayRetrieveTodos();
     this.toggleTodoForm();
@@ -17,7 +19,7 @@ export class UI {
   static displayRetrieveTodos() {
     const todoObject = Storage.retrieveAllTodos();
 
-    if (todoObject == {}) return; //if no items exit
+    if (!todoObject || Object.keys(todoObject).length === 0) return; //if no items exit
 
     const todoArray = Object.values(todoObject);
 
@@ -46,8 +48,8 @@ export class UI {
   static saveTodo() {
     const saveBtn = document.querySelector('#save-btn');
 
-    saveBtn.removeEventListener('click', () => this.addTodo()); // Remove if already present
-    saveBtn.addEventListener('click', () => this.addTodo());
+    saveBtn.removeEventListener('click', this.saveTodoHandler);
+    saveBtn.addEventListener('click', this.saveTodoHandler);
   }
 
   //add user input todo item
