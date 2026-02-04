@@ -15,15 +15,28 @@ module.exports = {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+      },
     ],
   },
   mode: 'development',
-
+  devtool: 'inline-source-map',
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    compress: true,
+    port: 8080,
+    open: true,
+    hot: true,
+  },
   plugins: [
     new HtmlWebpackPlugin({ template: './src/template.html' }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: '[name].css', // Optional: specify the output file name
+      filename: '[name].css',
     }),
   ],
 };
